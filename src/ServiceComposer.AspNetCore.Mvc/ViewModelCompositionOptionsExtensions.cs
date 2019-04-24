@@ -10,10 +10,15 @@ namespace ServiceComposer.AspNetCore.Mvc
 {
     public static class ViewModelCompositionOptionsExtensions
     {
+        public static void AddMvcSupport(this ViewModelCompositionOptions compositionOptions)
+        {
+            AddMvcSupport(compositionOptions, _ => { });
+        }
+
         public static void AddMvcSupport(this ViewModelCompositionOptions compositionOptions, Action<ViewModelCompositionMvcOptions> config)
         {
             var mvcCompositionOptions = new ViewModelCompositionMvcOptions(
-                    compositionOptions.Services, 
+                    compositionOptions.Services,
                     compositionOptions.IsAssemblyScanningDisabled);
 
             config?.Invoke(mvcCompositionOptions);
@@ -43,7 +48,7 @@ namespace ServiceComposer.AspNetCore.Mvc
             }
 
             //TODO: throw if MvcOptions is not defined, it means AddMvc has not been yet called.
-            compositionOptions.Services.Configure<MvcOptions>(options => 
+            compositionOptions.Services.Configure<MvcOptions>(options =>
             {
                 options.Filters.Add(typeof(CompositionActionFilter));
             });

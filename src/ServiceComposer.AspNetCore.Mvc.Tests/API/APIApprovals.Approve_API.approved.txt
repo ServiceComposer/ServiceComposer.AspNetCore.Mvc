@@ -14,6 +14,7 @@ namespace ServiceComposer.AspNetCore.Mvc
     }
     public class static ViewModelCompositionOptionsExtensions
     {
+        public static void AddMvcSupport(this ServiceComposer.AspNetCore.ViewModelCompositionOptions compositionOptions) { }
         public static void AddMvcSupport(this ServiceComposer.AspNetCore.ViewModelCompositionOptions compositionOptions, System.Action<ServiceComposer.AspNetCore.Mvc.ViewModelCompositionMvcOptions> config) { }
     }
 }
