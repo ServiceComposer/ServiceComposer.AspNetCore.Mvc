@@ -30,7 +30,7 @@ namespace ServiceComposer.AspNetCore.Mvc
             config?.Invoke(mvcCompositionOptions);
             if (!compositionOptions.IsAssemblyScanningDisabled)
             {
-                var types = new List<Type>();
+                var types = new HashSet<Type>();
                 foreach (var patternToUse in assemblySearchPatternsToUse)
                 {
                     var fileNames = Directory.GetFiles(AppContext.BaseDirectory, patternToUse);
@@ -39,7 +39,11 @@ namespace ServiceComposer.AspNetCore.Mvc
                         AssemblyValidator.ValidateAssemblyFile(fileName, out var shouldLoad, out var reason);
                         if (shouldLoad)
                         {
-                            types.AddRange(Assembly.LoadFrom(fileName).GetTypesFromAssembly());
+                            var matchingTypes = Assembly.LoadFrom(fileName).GetTypesFromAssembly();
+                            foreach (var type in matchingTypes.Where(t => !types.Contains(t)))
+                            {
+                                types.Add(type);
+                            }
                         }
                     }
                 }
@@ -53,8 +57,11 @@ namespace ServiceComposer.AspNetCore.Mvc
                         AssemblyValidator.ValidateAssemblyFile(platformAssembly, out var shouldLoad, out var reason);
                         if (shouldLoad)
                         {
-
-                            types.AddRange(Assembly.LoadFrom(platformAssembly).GetTypesFromAssembly());
+                            var matchingTypes = Assembly.LoadFrom(platformAssembly).GetTypesFromAssembly();
+                            foreach (var type in matchingTypes.Where(t => !types.Contains(t)))
+                            {
+                                types.Add(type);
+                            }
                         }
                     }
                 }
@@ -65,7 +72,6 @@ namespace ServiceComposer.AspNetCore.Mvc
                 }
             }
 
-            //TODO: throw if MvcOptions is not defined, it means AddMvc has not been yet called.
             compositionOptions.Services.Configure<MvcOptions>(options =>
             {
                 options.Filters.Add(typeof(CompositionActionFilter));
