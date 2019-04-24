@@ -1,0 +1,10 @@
+{
+  "ServiceComposer.AspNetCore.Mvc.Tests": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:59728/"
+    }
+  }
