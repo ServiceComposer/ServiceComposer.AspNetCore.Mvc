@@ -10,20 +10,42 @@ namespace ServiceComposer.AspNetCore.Mvc
 {
     public static class ViewModelCompositionOptionsExtensions
     {
+        static string[] assemblySearchPatternsToUse =
+        {
+            "*.dll",
+            "*.exe"
+        };
+
+        public static void AddMvcSupport(this ViewModelCompositionOptions compositionOptions)
+        {
+            AddMvcSupport(compositionOptions, _ => { });
+        }
+
         public static void AddMvcSupport(this ViewModelCompositionOptions compositionOptions, Action<ViewModelCompositionMvcOptions> config)
         {
             var mvcCompositionOptions = new ViewModelCompositionMvcOptions(
-                    compositionOptions.Services, 
+                    compositionOptions.Services,
                     compositionOptions.IsAssemblyScanningDisabled);
 
             config?.Invoke(mvcCompositionOptions);
             if (!compositionOptions.IsAssemblyScanningDisabled)
             {
-                var fileNames = Directory.GetFiles(AppContext.BaseDirectory);
-                var types = new List<Type>();
-                foreach (var fileName in fileNames)
+                var types = new HashSet<Type>();
+                foreach (var patternToUse in assemblySearchPatternsToUse)
                 {
-                    types.AddRange(Assembly.LoadFrom(fileName).GetTypesFromAssembly());
+                    var fileNames = Directory.GetFiles(AppContext.BaseDirectory, patternToUse);
+                    foreach (var fileName in fileNames)
+                    {
+                        AssemblyValidator.ValidateAssemblyFile(fileName, out var shouldLoad, out var reason);
+                        if (shouldLoad)
+                        {
+                            var matchingTypes = Assembly.LoadFrom(fileName).GetTypesFromAssembly();
+                            foreach (var type in matchingTypes.Where(t => !types.Contains(t)))
+                            {
+                                types.Add(type);
+                            }
+                        }
+                    }
                 }
 
                 var platformAssembliesString = (string)AppDomain.CurrentDomain.GetData("TRUSTED_PLATFORM_ASSEMBLIES");
@@ -32,7 +54,15 @@ namespace ServiceComposer.AspNetCore.Mvc
                     var platformAssemblies = platformAssembliesString.Split(Path.PathSeparator);
                     foreach (var platformAssembly in platformAssemblies)
                     {
-                        types.AddRange(Assembly.LoadFrom(platformAssembly).GetTypesFromAssembly());
+                        AssemblyValidator.ValidateAssemblyFile(platformAssembly, out var shouldLoad, out var reason);
+                        if (shouldLoad)
+                        {
+                            var matchingTypes = Assembly.LoadFrom(platformAssembly).GetTypesFromAssembly();
+                            foreach (var type in matchingTypes.Where(t => !types.Contains(t)))
+                            {
+                                types.Add(type);
+                            }
+                        }
                     }
                 }
 
@@ -42,8 +72,7 @@ namespace ServiceComposer.AspNetCore.Mvc
                 }
             }
 
-            //TODO: throw if MvcOptions is not defined, it means AddMvc has not been yet called.
-            compositionOptions.Services.Configure<MvcOptions>(options => 
+            compositionOptions.Services.Configure<MvcOptions>(options =>
             {
                 options.Filters.Add(typeof(CompositionActionFilter));
             });
