@@ -7,13 +7,10 @@ namespace ServiceComposer.AspNetCore.Mvc
     {
         private IServiceCollection services;
 
-        internal ViewModelCompositionMvcOptions(IServiceCollection services, bool isAssemblyScanningDisabled)
+        internal ViewModelCompositionMvcOptions(IServiceCollection services)
         {
             this.services = services;
-            IsAssemblyScanningDisabled = isAssemblyScanningDisabled;
         }
-
-        public bool IsAssemblyScanningDisabled { get; private set; }
 
         public void RegisterResultHandler<T>()
             where T : IHandleResult

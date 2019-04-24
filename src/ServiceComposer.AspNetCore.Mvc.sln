@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceComposer.AspNetCore.Mvc", "ServiceComposer.AspNetCore.Mvc\ServiceComposer.AspNetCore.Mvc.csproj", "{AA5E12FF-66D8-4545-9F69-06376DBA2568}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceComposer.AspNetCore.Mvc.Tests", "ServiceComposer.AspNetCore.Mvc.Tests\ServiceComposer.AspNetCore.Mvc.Tests.csproj", "{5E76A3FA-7D46-41F8-87EA-4676F547ACE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceComposer.AspNetCore.Mvc.Tests", "ServiceComposer.AspNetCore.Mvc.Tests\ServiceComposer.AspNetCore.Mvc.Tests.csproj", "{5E76A3FA-7D46-41F8-87EA-4676F547ACE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
