@@ -1,0 +1,19 @@
+﻿[assembly: System.Runtime.Versioning.TargetFrameworkAttribute(".NETStandard,Version=v2.0", FrameworkDisplayName="")]
+namespace ServiceComposer.AspNetCore.Mvc
+{
+    public interface IHandleResult : ServiceComposer.AspNetCore.IInterceptRoutes
+    {
+        System.Threading.Tasks.Task Handle(string requestId, Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext context, [System.Runtime.CompilerServices.DynamicAttribute()] object viewModel, int httpStatusCode);
+    }
+    public class ViewModelCompositionMvcOptions
+    {
+        public bool IsAssemblyScanningDisabled { get; }
+        public void RegisterResultHandler<T>()
+            where T : ServiceComposer.AspNetCore.Mvc.IHandleResult { }
+        public void RegisterResultHandler(System.Type type) { }
+    }
+    public class static ViewModelCompositionOptionsExtensions
+    {
+        public static void AddMvcSupport(this ServiceComposer.AspNetCore.ViewModelCompositionOptions compositionOptions, System.Action<ServiceComposer.AspNetCore.Mvc.ViewModelCompositionMvcOptions> config) { }
+    }
+}
