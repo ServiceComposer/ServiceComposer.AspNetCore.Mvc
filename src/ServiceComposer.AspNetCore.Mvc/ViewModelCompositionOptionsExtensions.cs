@@ -10,6 +10,12 @@ namespace ServiceComposer.AspNetCore.Mvc
 {
     public static class ViewModelCompositionOptionsExtensions
     {
+        static string[] assemblySearchPatternsToUse =
+        {
+            "*.dll",
+            "*.exe"
+        };
+
         public static void AddMvcSupport(this ViewModelCompositionOptions compositionOptions)
         {
             AddMvcSupport(compositionOptions, _ => { });
@@ -24,11 +30,18 @@ namespace ServiceComposer.AspNetCore.Mvc
             config?.Invoke(mvcCompositionOptions);
             if (!compositionOptions.IsAssemblyScanningDisabled)
             {
-                var fileNames = Directory.GetFiles(AppContext.BaseDirectory);
                 var types = new List<Type>();
-                foreach (var fileName in fileNames)
+                foreach (var patternToUse in assemblySearchPatternsToUse)
                 {
-                    types.AddRange(Assembly.LoadFrom(fileName).GetTypesFromAssembly());
+                    var fileNames = Directory.GetFiles(AppContext.BaseDirectory, patternToUse);
+                    foreach (var fileName in fileNames)
+                    {
+                        AssemblyValidator.ValidateAssemblyFile(fileName, out var shouldLoad, out var reason);
+                        if (shouldLoad)
+                        {
+                            types.AddRange(Assembly.LoadFrom(fileName).GetTypesFromAssembly());
+                        }
+                    }
                 }
 
                 var platformAssembliesString = (string)AppDomain.CurrentDomain.GetData("TRUSTED_PLATFORM_ASSEMBLIES");
@@ -37,7 +50,12 @@ namespace ServiceComposer.AspNetCore.Mvc
                     var platformAssemblies = platformAssembliesString.Split(Path.PathSeparator);
                     foreach (var platformAssembly in platformAssemblies)
                     {
-                        types.AddRange(Assembly.LoadFrom(platformAssembly).GetTypesFromAssembly());
+                        AssemblyValidator.ValidateAssemblyFile(platformAssembly, out var shouldLoad, out var reason);
+                        if (shouldLoad)
+                        {
+
+                            types.AddRange(Assembly.LoadFrom(platformAssembly).GetTypesFromAssembly());
+                        }
                     }
                 }
 
