@@ -17,7 +17,7 @@ namespace ServiceComposer.AspNetCore.Mvc
             var types = new List<Type>();
             foreach (var fileName in fileNames)
             {
-                var temp = AssemblyLoader.Load(fileName)
+                var temp = Assembly.LoadFrom(fileName)
                     .GetTypes()
                     .Where(t =>
                     {
