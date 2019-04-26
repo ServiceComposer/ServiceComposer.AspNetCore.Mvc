@@ -15,7 +15,7 @@ namespace ServiceComposer.AspNetCore.Mvc
             var mvcCompositionOptions = new ViewModelCompositionMvcOptions(compositionOptions.Services);
             config?.Invoke(mvcCompositionOptions);
 
-            if (!compositionOptions.AssemblyScanner.IsDisabled)
+            if (compositionOptions.AssemblyScanner.IsEnabled)
             {
                 compositionOptions.AssemblyScanner.RegisterTypeFilter(
                     filter: type =>
