@@ -26,12 +26,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="ServiceComposer.AspNetCore" Version="0.0.7-PR.18.alpha.0.2" />
+    <PackageReference Include="ServiceComposer.AspNetCore" Version="0.0.7-pr.18.build.12.24154102.alpha.0.2" />
   </ItemGroup>
 
   <Target Name="AppVeyorPullRequestsTarget" AfterTargets="MinVer" Condition="'$(APPVEYOR_PULL_REQUEST_NUMBER)' != ''">
     <PropertyGroup>
-      <PackageVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)-PR.$(APPVEYOR_PULL_REQUEST_NUMBER).$(MinVerPreRelease)</PackageVersion>
+      <PackageVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)-pr.$(APPVEYOR_PULL_REQUEST_NUMBER).build.$(APPVEYOR_BUILD_NUMBER).$(APPVEYOR_BUILD_ID).$(MinVerPreRelease)</PackageVersion>
       <PackageVersion Condition="'$(MinVerBuildMetadata)' != ''">$(PackageVersion)+$(MinVerBuildMetadata)</PackageVersion>
       <Version>$(PackageVersion)</Version>
     </PropertyGroup>
