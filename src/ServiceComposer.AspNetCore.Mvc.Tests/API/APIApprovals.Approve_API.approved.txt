@@ -7,7 +7,6 @@ namespace ServiceComposer.AspNetCore.Mvc
     }
     public class ViewModelCompositionMvcOptions
     {
-        public bool IsAssemblyScanningDisabled { get; }
         public void RegisterResultHandler<T>()
             where T : ServiceComposer.AspNetCore.Mvc.IHandleResult { }
         public void RegisterResultHandler(System.Type type) { }
