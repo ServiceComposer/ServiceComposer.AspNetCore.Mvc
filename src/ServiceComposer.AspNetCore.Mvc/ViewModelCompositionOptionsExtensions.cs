@@ -12,27 +12,10 @@ namespace ServiceComposer.AspNetCore.Mvc
 
         public static void AddMvcSupport(this ViewModelCompositionOptions compositionOptions, Action<ViewModelCompositionMvcOptions> config)
         {
-            var mvcCompositionOptions = new ViewModelCompositionMvcOptions(compositionOptions.Services);
-            config?.Invoke(mvcCompositionOptions);
+            var options = new ViewModelCompositionMvcOptions(compositionOptions);
+            config?.Invoke(options);
 
-            if (compositionOptions.AssemblyScanner.IsEnabled)
-            {
-                compositionOptions.AssemblyScanner.RegisterTypeFilter(
-                    filter: type =>
-                    {
-                        var typeInfo = type.GetTypeInfo();
-                        return !typeInfo.IsInterface
-                            && !typeInfo.IsAbstract
-                            && typeof(IHandleResult).IsAssignableFrom(type);
-                    },
-                    registrationHandler: types =>
-                    {
-                        foreach (var type in types)
-                        {
-                            mvcCompositionOptions.RegisterResultHandler(type);
-                        }
-                    });
-            }
+            options.Initialize();
         }
     }
 }

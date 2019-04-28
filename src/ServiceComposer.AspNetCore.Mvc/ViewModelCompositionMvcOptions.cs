@@ -1,15 +1,16 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Reflection;
 
 namespace ServiceComposer.AspNetCore.Mvc
 {
     public class ViewModelCompositionMvcOptions
     {
-        private IServiceCollection services;
+        private ViewModelCompositionOptions compositionOptions;
 
-        internal ViewModelCompositionMvcOptions(IServiceCollection services)
+        internal ViewModelCompositionMvcOptions(ViewModelCompositionOptions compositionOptions)
         {
-            this.services = services;
+            this.compositionOptions = compositionOptions;
         }
 
         public void RegisterResultHandler<T>()
@@ -20,7 +21,29 @@ namespace ServiceComposer.AspNetCore.Mvc
 
         public void RegisterResultHandler(Type type)
         {
-            services.AddSingleton(typeof(IHandleResult), type);
+            compositionOptions.Services.AddSingleton(typeof(IHandleResult), type);
+        }
+
+        internal void Initialize()
+        {
+            if (compositionOptions.AssemblyScanner.IsEnabled)
+            {
+                compositionOptions.AddTypesRegistrationHandler(
+                    typesFilter: type =>
+                    {
+                        var typeInfo = type.GetTypeInfo();
+                        return !typeInfo.IsInterface
+                            && !typeInfo.IsAbstract
+                            && typeof(IHandleResult).IsAssignableFrom(type);
+                    },
+                    registrationHandler: types =>
+                    {
+                        foreach (var type in types)
+                        {
+                            RegisterResultHandler(type);
+                        }
+                    });
+            }
         }
     }
 }
