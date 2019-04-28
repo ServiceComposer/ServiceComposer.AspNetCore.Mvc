@@ -26,7 +26,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="ServiceComposer.AspNetCore" Version="0.0.7-pr.18.build.12.24154102.alpha.0.2" />
+    <PackageReference Include="ServiceComposer.AspNetCore" Version="0.0.7" />
   </ItemGroup>
 
   <Target Name="AppVeyorPullRequestsTarget" AfterTargets="MinVer" Condition="'$(APPVEYOR_PULL_REQUEST_NUMBER)' != ''">
