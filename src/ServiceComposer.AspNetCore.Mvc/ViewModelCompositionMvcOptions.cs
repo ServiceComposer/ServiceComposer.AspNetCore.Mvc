@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
 
@@ -44,6 +45,11 @@ namespace ServiceComposer.AspNetCore.Mvc
                         }
                     });
             }
+
+            compositionOptions.Services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(typeof(CompositionActionFilter));
+            });
         }
     }
 }
