@@ -22,7 +22,7 @@ namespace ServiceComposer.AspNetCore.Mvc
 
         public void RegisterResultHandler(Type type)
         {
-            compositionOptions.Services.AddSingleton(typeof(IHandleResult), type);
+            compositionOptions.Services.AddTransient(typeof(IHandleResult), type);
         }
 
         internal void Initialize()
