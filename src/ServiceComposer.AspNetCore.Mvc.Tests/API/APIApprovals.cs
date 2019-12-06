@@ -13,7 +13,7 @@ namespace ServiceComposer.AspNetCore.Mvc.Tests.API
         [MethodImpl(MethodImplOptions.NoInlining)]
         public void Approve_API()
         {
-            var publicApi = ApiGenerator.GeneratePublicApi(typeof(IHandleResult).Assembly);
+            var publicApi = typeof(IHandleResult).Assembly.GeneratePublicApi();
 
             Approvals.Verify(publicApi);
         }

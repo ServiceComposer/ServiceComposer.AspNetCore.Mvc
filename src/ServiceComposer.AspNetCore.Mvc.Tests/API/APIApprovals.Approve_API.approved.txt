@@ -1,18 +1,18 @@
-﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleToAttribute("ServiceComposer.AspNetCore.Mvc.Tests")]
-[assembly: System.Runtime.Versioning.TargetFrameworkAttribute(".NETStandard,Version=v2.0", FrameworkDisplayName="")]
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ServiceComposer.AspNetCore.Mvc.Tests")]
+[assembly: System.Runtime.Versioning.TargetFramework(".NETStandard,Version=v2.0", FrameworkDisplayName="")]
 namespace ServiceComposer.AspNetCore.Mvc
 {
     public interface IHandleResult : ServiceComposer.AspNetCore.IInterceptRoutes
     {
-        System.Threading.Tasks.Task Handle(string requestId, Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext context, [System.Runtime.CompilerServices.DynamicAttribute()] object viewModel, int httpStatusCode);
+        System.Threading.Tasks.Task Handle(string requestId, Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext context, [System.Runtime.CompilerServices.Dynamic] object viewModel, int httpStatusCode);
     }
     public class ViewModelCompositionMvcOptions
     {
+        public void RegisterResultHandler(System.Type type) { }
         public void RegisterResultHandler<T>()
             where T : ServiceComposer.AspNetCore.Mvc.IHandleResult { }
-        public void RegisterResultHandler(System.Type type) { }
     }
-    public class static ViewModelCompositionOptionsExtensions
+    public static class ViewModelCompositionOptionsExtensions
     {
         public static void AddMvcSupport(this ServiceComposer.AspNetCore.ViewModelCompositionOptions compositionOptions) { }
         public static void AddMvcSupport(this ServiceComposer.AspNetCore.ViewModelCompositionOptions compositionOptions, System.Action<ServiceComposer.AspNetCore.Mvc.ViewModelCompositionMvcOptions> config) { }
