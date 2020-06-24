@@ -9,6 +9,10 @@
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="ServiceComposer.AspNetCore" Version="1.0.0-Beta.3" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ApprovalTests" Version="5.2.5" />
