@@ -1,0 +1,20 @@
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ServiceComposer.AspNetCore.Mvc.Tests")]
+[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v3.1", FrameworkDisplayName="")]
+namespace ServiceComposer.AspNetCore.Mvc
+{
+    public interface IHandleResult : ServiceComposer.AspNetCore.IInterceptRoutes
+    {
+        System.Threading.Tasks.Task Handle(string requestId, Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext context, [System.Runtime.CompilerServices.Dynamic] object viewModel, int httpStatusCode);
+    }
+    public class ViewModelCompositionMvcOptions
+    {
+        public void RegisterResultHandler(System.Type type) { }
+        public void RegisterResultHandler<T>()
+            where T : ServiceComposer.AspNetCore.Mvc.IHandleResult { }
+    }
+    public static class ViewModelCompositionOptionsExtensions
+    {
+        public static void AddMvcSupport(this ServiceComposer.AspNetCore.ViewModelCompositionOptions compositionOptions) { }
+        public static void AddMvcSupport(this ServiceComposer.AspNetCore.ViewModelCompositionOptions compositionOptions, System.Action<ServiceComposer.AspNetCore.Mvc.ViewModelCompositionMvcOptions> config) { }
+    }
+}
