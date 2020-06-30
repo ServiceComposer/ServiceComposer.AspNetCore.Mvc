@@ -11,7 +11,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="ServiceComposer.AspNetCore" Version="1.0.0" />
+    <PackageReference Include="ServiceComposer.AspNetCore" Version="1.3.0" />
   </ItemGroup>
 
   <ItemGroup>
