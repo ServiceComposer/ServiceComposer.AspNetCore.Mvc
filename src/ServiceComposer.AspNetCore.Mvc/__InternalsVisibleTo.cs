@@ -1,1 +1,2 @@
 ﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ServiceComposer.AspNetCore.Mvc.Tests")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ServiceComposer.AspNetCore.Mvc.Endpoints.Tests")]
