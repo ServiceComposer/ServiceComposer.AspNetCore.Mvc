@@ -10,7 +10,6 @@ namespace ServiceComposer.AspNetCore.Mvc.Tests
 {
     public class When_configuring_Mvc_support
     {
-#if NETCOREAPP2_1
         [Fact]
         public void Should_fail_if_no_mvc_is_configured()
         {
@@ -67,13 +66,11 @@ namespace ServiceComposer.AspNetCore.Mvc.Tests
                 .Filters
                 .SingleOrDefault(f =>
                 {
-                    return f is TypeFilterAttribute tfa 
+                    return f is TypeFilterAttribute tfa
                         && tfa.ImplementationType == typeof(CompositionActionFilter);
                 });
 
             Assert.NotNull(registeredFilter);
         }
-
-#endif
     }
 }

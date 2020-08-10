@@ -4,7 +4,7 @@ using PublicApiGenerator;
 using System.Runtime.CompilerServices;
 using Xunit;
 
-namespace ServiceComposer.AspNetCore.Mvc.Tests.API
+namespace ServiceComposer.AspNetCore.Mvc.Endpoints.Tests.API
 {
     public class APIApprovals
     {

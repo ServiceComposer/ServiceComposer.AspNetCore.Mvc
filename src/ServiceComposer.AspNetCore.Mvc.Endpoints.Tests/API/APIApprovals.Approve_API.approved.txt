@@ -1,5 +1,6 @@
-﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ServiceComposer.AspNetCore.Mvc.Tests")]
-[assembly: System.Runtime.Versioning.TargetFramework(".NETStandard,Version=v2.0", FrameworkDisplayName="")]
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ServiceComposer.AspNetCore.Mvc.Endpoints.Tests")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ServiceComposer.AspNetCore.Mvc.Tests")]
+[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v3.1", FrameworkDisplayName="")]
 namespace ServiceComposer.AspNetCore.Mvc
 {
     public interface IHandleResult : ServiceComposer.AspNetCore.IInterceptRoutes

@@ -1,23 +1,22 @@
+using System;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceComposer.AspNetCore.Testing;
-using System;
-using System.Linq;
 using Xunit;
 
-namespace ServiceComposer.AspNetCore.Mvc.Tests
+namespace ServiceComposer.AspNetCore.Mvc.Endpoints.Tests
 {
     public class When_configuring_Endpoints
     {
-#if NETCOREAPP3_1
         [Fact(Skip = "Need to find a better way to detect if there is a misconfiguration.")]
         public void Should_fail_if_no_mvc_is_configured()
         {
             Assert.Throws<InvalidOperationException>(() =>
             {
                 // Arrange
-                var factory = new SelfContainedWebApplicationFactoryWithWebHost<When_configuring_Mvc_support>
+                var factory = new SelfContainedWebApplicationFactoryWithWebHost<When_configuring_Endpoints>
                 (
                     configureServices: services =>
                     {
@@ -42,7 +41,7 @@ namespace ServiceComposer.AspNetCore.Mvc.Tests
             MvcOptions mvcOptions = null;
 
             // Arrange
-            var factory = new SelfContainedWebApplicationFactoryWithWebHost<When_configuring_Mvc_support>
+            var factory = new SelfContainedWebApplicationFactoryWithWebHost<When_configuring_Endpoints>
             (
                 configureServices: services =>
                 {
@@ -71,6 +70,5 @@ namespace ServiceComposer.AspNetCore.Mvc.Tests
 
             Assert.NotNull(registeredFilter);
         }
-#endif
     }
 }
