@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace ServiceComposer.AspNetCore.Mvc
-{ 
+{
     class CompositionActionFilter : IAsyncResultFilter
     {
         IEnumerable<IHandleResult> resultHandlers;
@@ -21,7 +21,7 @@ namespace ServiceComposer.AspNetCore.Mvc
         public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
             var requestId = context.HttpContext.Request.Headers.GetComposedRequestIdHeaderOr(() => Guid.NewGuid().ToString());
-            (var viewModel, var statusCode) = await CompositionHandler.HandleRequest(requestId, context.HttpContext);
+            var (viewModel, statusCode) = await CompositionHandler.HandleRequest(requestId, context.HttpContext);
 
             var routeData = context.HttpContext.GetRouteData();
             var request = context.HttpContext.Request;
@@ -50,18 +50,12 @@ namespace ServiceComposer.AspNetCore.Mvc
                 if (context.Result is ViewResult viewResult && viewResult.ViewData.Model == null)
                 {
                     //MVC
-                    if (statusCode == StatusCodes.Status200OK)
-                    {
-                        viewResult.ViewData.Model = viewModel;
-                    }
+                    viewResult.ViewData.Model = viewModel;
                 }
                 else if (context.Result is ObjectResult objectResult && objectResult.Value == null)
                 {
                     //WebAPI
-                    if (statusCode == StatusCodes.Status200OK)
-                    {
-                        objectResult.Value = viewModel;
-                    }
+                    objectResult.Value = viewModel;
                 }
             }
         }
