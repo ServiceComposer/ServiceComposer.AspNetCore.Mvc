@@ -39,7 +39,7 @@ More details on how to implement `IHandleRequests` and `ISubscribeToCompositionE
 - [ViewModel Composition: show me the code!](https://milestone.topics.it/view-model-composition/2019/03/06/viewmodel-composition-show-me-the-code.html)
 - [The ViewModels Lists Composition Dance](https://milestone.topics.it/view-model-composition/2019/03/21/the-viewmodels-lists-composition-dance.html)
 
-A complete sample of a Mvc application hosting the Composition Gateway is available in the [ASP.Net Mvc Core](https://github.com/mauroservienti/designing-a-ui-for-microservices-demos/tree/master/ASP.Net Mvc Core) folder of the [Designing a UI for microservices demos](https://github.com/mauroservienti/designing-a-ui-for-microservices-demos/) project.
+A complete sample of a Mvc application hosting the Composition Gateway is available in the [ASP.Net Mvc Core](https://github.com/mauroservienti/designing-a-ui-for-microservices-demos/tree/master/ASP.Net%20Mvc%20Core) folder of the [Designing a UI for microservices demos](https://github.com/mauroservienti/designing-a-ui-for-microservices-demos/) project.
 
 ### Icon
 
