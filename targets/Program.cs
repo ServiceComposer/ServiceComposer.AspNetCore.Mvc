@@ -1,10 +1,11 @@
 using System.IO;
+using System.Threading.Tasks;
 using static Bullseye.Targets;
 using static SimpleExec.Command;
 
 internal class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var sdk = new DotnetSdkManager();
 
@@ -18,6 +19,6 @@ internal class Program
             Directory.EnumerateFiles("src", "*.Tests.csproj", SearchOption.AllDirectories),
             proj => Run(sdk.GetDotnetCliPath(), $"test \"{proj}\" --configuration Release --no-build"));
 
-        RunTargetsAndExit(args);
+        await RunTargetsAndExitAsync(args);
     }
 }
